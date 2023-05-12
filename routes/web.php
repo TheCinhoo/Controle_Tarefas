@@ -21,10 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource('tarefa', TarefaController::class);
+// Route::get('/home', [HomeController::class, 'index'])
+//     ->name('home')
+//     ->middleware('verified'); //Só deixa acessar se o e-mail for verificado
+
+Route::resource('tarefa', TarefaController::class)
+    ->middleware('verified');
 
 Route::get('mensagem-teste', function () {
     return new MensagemTesteMail;
