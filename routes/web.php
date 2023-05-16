@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('bem-vindo');
 });
 
 Auth::routes(['verify' => true]);
@@ -27,6 +27,8 @@ Auth::routes(['verify' => true]);
 //     ->name('home')
 //     ->middleware('verified'); //Só deixa acessar se o e-mail for verificado
 
+
+Route::get('terefa/exportacao', [TarefaController::class, 'exportacao'])->name('tarefa.exportacao');
 Route::resource('tarefa', TarefaController::class)
     ->middleware('verified');
 
