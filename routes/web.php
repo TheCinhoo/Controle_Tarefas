@@ -1,12 +1,12 @@
-<?php
+        <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\TarefaController;
-use App\Mail\MensagemTesteMail;
-use Illuminate\Support\Facades\Mail;
+        use Illuminate\Support\Facades\Route;
+        use App\Http\Controllers\HomeController;
+        use App\Http\Controllers\TarefaController;
+        use App\Mail\MensagemTesteMail;
+        use Illuminate\Support\Facades\Mail;
 
-/*
+        /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -17,23 +17,24 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::get('/', function () {
-    return view('bem-vindo');
-});
+        Route::get('/', function () {
+            return view('bem-vindo');
+        });
 
-Auth::routes(['verify' => true]);
+        Auth::routes(['verify' => true]);
 
-// Route::get('/home', [HomeController::class, 'index'])
-//     ->name('home')
-//     ->middleware('verified'); //Só deixa acessar se o e-mail for verificado
+        // Route::get('/home', [HomeController::class, 'index'])
+        //     ->name('home')
+        //     ->middleware('verified'); //Só deixa acessar se o e-mail for verificado
 
 
-Route::get('terefa/exportacao', [TarefaController::class, 'exportacao'])->name('tarefa.exportacao');
-Route::resource('tarefa', TarefaController::class)
-    ->middleware('verified');
+        Route::get('terefa/exportacao/{extensao}', [TarefaController::class, 'exportacao'])->name('tarefa.exportacao');
+        Route::get('terefa/exportar/', [TarefaController::class, 'exportar'])->name('tarefa.exportar');
+        Route::resource('tarefa', TarefaController::class)
+            ->middleware('verified');
 
-Route::get('mensagem-teste', function () {
-    return new MensagemTesteMail;
-    // Mail::to('fabricio.silva@casacaresc.org.br')->send(new MensagemTesteMail());
-    // return 'Email Enviado com sucesso.';
-});
+        Route::get('mensagem-teste', function () {
+            return new MensagemTesteMail;
+            // Mail::to('fabricio.silva@casacaresc.org.br')->send(new MensagemTesteMail());
+            // return 'Email Enviado com sucesso.';
+        });

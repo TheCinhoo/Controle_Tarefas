@@ -10,6 +10,7 @@ use App\Exports\TarefasExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class TarefaController extends Controller
 {
@@ -120,9 +121,22 @@ class TarefaController extends Controller
         return view('acesso-negado');
     }
 
-    public function exportacao()
+    public function exportacao($extensao)
     {
+        $nome_arquivo = 'lista_de_tarefas.';
+        if (in_array($extensao, ['xlsx', 'csv', 'pdf'])) {
+            $nome_arquivo .=  $extensao;
+            return Excel::download(new TarefasExport, $nome_arquivo);
+        }
+        return redirect()->route('tarefa.index');
+    }
 
-        return Excel::download(new TarefasExport, 'lista_de_tarefas.xlsx');
+    public function exportar()
+    {
+        $tarefas = auth()->user()->tarefas()->get();
+        $pdf = PDF::loadView('tarefa.pdf', ['tarefas' => $tarefas]);
+        $pdf->setPaper('a4', 'portrait');
+        // return $pdf->download('invoice.pdf');
+        return $pdf->stream('invoice.pdf');
     }
 }

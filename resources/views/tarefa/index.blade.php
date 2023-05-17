@@ -12,8 +12,11 @@
                         </div>
                         <div class="col-6">
                             <div class="float-end">
-                                <a href="{{ route('tarefa.create') }}" class="mr-3">Nova</a>
-                                <a href="{{ route('tarefa.exportacao') }}">XLXS </a>
+                                <a href="{{ route('tarefa.create') }}" class="mr-3"> Nova |</a>
+                                <a href="{{ route('tarefa.exportacao', ['extensao' => 'xlsx']) }}"> XLXS |</a>
+                                <a href="{{ route('tarefa.exportacao', ['extensao' => 'csv']) }}"> CSV |</a>
+                                <a href="{{ route('tarefa.exportacao', ['extensao' => 'pdf']) }}"> PDF |</a>
+                                <a href="{{ route('tarefa.exportar') }}" target="_blank"> PDF v2 |</a>
                             </div>
                         </div>
 
